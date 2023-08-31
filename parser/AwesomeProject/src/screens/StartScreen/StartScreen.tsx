@@ -22,7 +22,9 @@ const StartScreen = () => {
   const onSignup= () =>{
     navigation.navigate("SignUp");
   }
-
+  React.useLayoutEffect(() => {
+    navigation.setOptions({ headerShown: false });
+  }, [navigation]);
   return (
     <View style={styles.root}>
       <Image 
@@ -46,7 +48,7 @@ const styles= StyleSheet.create({
     backgroundColor: '#F9FBFC',
     flex:1,
     alignItems: 'center' ,
-    paddingTop: 80,
+    paddingTop: 110,
     padding:20,
     
   },
