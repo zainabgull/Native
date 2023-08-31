@@ -1,23 +1,33 @@
 import { View, Text , TextInput , StyleSheet} from 'react-native'
 import React from 'react'
-
-const CustomInput = ({value, setValue, placeholder, secureTextEntry}) => {
+interface CustomInputProps {
+  value: string;
+  setValue: (value: string) => void;
+  placeholder?: string;
+  secureTextEntry?: boolean;
+}
+const CustomInput: React.FC<CustomInputProps> = ({
+  value,
+  setValue,
+  placeholder,
+  secureTextEntry,
+}) =>{
   return (
     <View style={styles.container}>
       <TextInput
+        style={styles.input}
         value={value}
         onChangeText={setValue}
         placeholder={placeholder}
-        style={styles.input}
+        
         secureTextEntry={secureTextEntry}
-      />
-      
+      />  
     </View>
   )
 }
-
 const styles = StyleSheet.create({
   container: {
+    fontFamily:'Poppins-Bold',
     backgroundColor: "white",
     width: '100%',
     borderColor: '#e8e8e8',
@@ -25,9 +35,11 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     paddingHorizontal: 10,
     marginVertical: 5,
-
   },
-  input: {},
+  input:{
+    fontFamily:'Poppins-Medium',
+  }
+  
 })
 
 export default CustomInput

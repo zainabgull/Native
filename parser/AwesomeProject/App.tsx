@@ -4,18 +4,22 @@
  *
  * @format
  */
-
+import 'react-native-gesture-handler';
 import React from 'react';
 import {SafeAreaView ,View, Text, Image, ScrollView, TextInput, StyleSheet} from 'react-native';
 import Navigation from './src/navigation';
-import auth from "@react-native-firebase/auth";
-import { firebase } from '@react-native-firebase/auth';
+import 'react-native-gesture-handler';
+import { NavigationContainer } from "@react-navigation/native";
+import DrawerNavigation from './src/navigation/DrawerNavigation';
+
 
 const App = () => {
   return (
-    <SafeAreaView style={styles.root}>
-     <Navigation />
-    </SafeAreaView>
+    <NavigationContainer>
+     
+     <Navigation/>
+    
+    </NavigationContainer>
    
   );
 };
@@ -25,4 +29,6 @@ const styles= StyleSheet.create({
   },
 })
 
+
 export default App;
+

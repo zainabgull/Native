@@ -3,22 +3,16 @@ import {
   View, 
   Text, 
   StyleSheet ,
-  ScrollView,
-
 
 } from 'react-native';
 import React, {useState} from 'react';
 import Logo from '../../../assets/images/resume.png';
 import CustomButton from '../../components/CustomButton';
-import { useNavigation } from '@react-navigation/native';
 
-
-
-const StartScreen = () => {
-  const navigation = useNavigation();
-  const onLogin = () =>{
-    navigation.navigate("SignIn");
-  }
+const StartScreen = ({ navigation }: { navigation: any }) => {
+  const onLogin = () => {
+  navigation.navigate( "SignIn" );
+}
   const onSignup= () =>{
     navigation.navigate("SignUp");
   }
@@ -35,9 +29,8 @@ const StartScreen = () => {
       <Text style={styles.text}>
       Find your next star performer with a click
       </Text>
-      <CustomButton text="LOGIN" onPress={onLogin} />
-       
-        <CustomButton text="Sign Up" onPress={onSignup} type="Secondary" />
+      <CustomButton text="LOGIN" onPress={onLogin} disabled={undefined} />
+      <CustomButton text="Sign Up" onPress={onSignup} type="Secondary" disabled={undefined} />
       
     </View> 
   )

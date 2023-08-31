@@ -4,29 +4,21 @@ import {
     Text,
     Image,
     StyleSheet,
-    useWindowDimensions,
-    ScrollView,
   } from 'react-native';
   import CustomButton from '../../components/CustomButton';
   import CustomInput from '../../components/CustomInput';
-  import {useNavigation} from '@react-navigation/core';
   import auth from '@react-native-firebase/auth';
   import firestore from "@react-native-firebase/firestore";
-  import { NavigationContainer } from '@react-navigation/native';
-  
+  import Logo from '../../../assets/images/resume.png';
 
-const SignUpScreen = () => {
+const SignUpScreen = ({ navigation }: { navigation: any }) => {
   const [username, setUsername] = useState('');
   const [companyname, setCompanyName] =useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [passwordRepeat, setPasswordRepeat] = useState('');
-  
-
-  const navigation = useNavigation();
   const [error, setError] = useState('');
 
-  
   const onRegisterPressed = async() => {
     if (!username || !companyname || !email || !password || !passwordRepeat) {
       setError('Please fill in both email and password fields.');
@@ -46,53 +38,40 @@ const SignUpScreen = () => {
           name:username,
           CompanyName:companyname,
           email:result.user.email,
-          uid:result.user.uid,
-          
+          uid:result.user.uid, 
         })
         .then(() => {
           navigation.navigate("Home");
-        })
-        
-    }catch(error){
-      if (error.code === 'auth/email-already-in-use') {
-          setError('The email address is already associated with an existing account.');
-        }else {
-          setError(error.message);
-          
-        }
+        })     
+    }catch(error) {
+      if ((error as { code: string }).code === 'auth/email-already-in-use') {
+        setError('The email address is already associated with an existing account.');
+      } else {
+        setError((error as Error).message);
       }
-    
+    }  
   };
-                
-           
-     
-  
-
-  const onSignInPress = () => {
-    console.warn("OnSignIn")
-
-  };
-
-  
-  
-
+  React.useLayoutEffect(() => {
+    navigation.setOptions({ headerShown: false });
+  }, [navigation]);
   return (
-    
       <View style={styles.root}>
+        <Image 
+         source={Logo}
+         style={styles.logo}
+         resizeMode="contain"
+      />
         <Text style={styles.title}>Create an account</Text>
-
         <CustomInput
-          placeholder="Username"
-          value={username}
-          setValue={setUsername}
-        />
+        placeholder="Username"
+        value={username}
+        setValue={setUsername} secureTextEntry={undefined}        />
         <CustomInput
-           placeholder="Company Name"
-           value={companyname}
-           setValue={setCompanyName}   
-
+        placeholder="Company Name"
+        value={companyname}
+        setValue={setCompanyName} secureTextEntry={undefined}
         />
-        <CustomInput placeholder="Email" value={email} setValue={setEmail} />
+        <CustomInput placeholder="Email" value={email} setValue={setEmail} secureTextEntry={undefined} />
         <CustomInput
           placeholder="Password"
           value={password}
@@ -106,14 +85,8 @@ const SignUpScreen = () => {
           secureTextEntry
         />
         {error && <Text>{error}</Text>}
-        <CustomButton text="Register"  onPress={onRegisterPressed} />
-
-        
-
-
-        
+        <CustomButton text="SignUp" onPress={onRegisterPressed} disabled={undefined} />
       </View>
-    
   );
 };
 
@@ -121,17 +94,22 @@ const styles = StyleSheet.create({
   root: {
     flex:1,
     backgroundColor:'#F9FBFC',
-    alignItems: 'center',
     padding: 20,
+    paddingTop:60,
+  },
+  logo: {
+    alignSelf:'center',
+    width: 300,
+    height: 150,
+    marginBottom: 25,
   },
   title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    color: '#051C60',
-    margin: 10,
+    fontFamily: 'Poppins-Bold',
+    fontSize: 30,
+    color: '#374151',
+    textDecorationLine:'underline',
     
   },
-  
   
 });
 

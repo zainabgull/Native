@@ -1,12 +1,18 @@
 import { View, Text, StyleSheet, Pressable } from 'react-native'
 import React from 'react'
-
-const CustomButton = ({onPress, disabled , text, type = 'PRIMARY'}) => {
+interface CustomButtonProps {
+  onPress: () => void;
+  disabled?: boolean;
+  text: string;
+  type?: string;
+}
+const CustomButton: React.FC<CustomButtonProps> = ({ onPress, disabled, text, type = 'PRIMARY' }) => {
   const buttonStyle = [
     styles.container,
-    styles[`container_${type}`],
-    disabled && styles.disabledButton
+    styles[`container_${type}` as keyof typeof styles], // Type assertion
+    disabled && styles.disabledButton,
   ];
+
   return (
     <Pressable  
     onPress={onPress}
@@ -20,10 +26,8 @@ const CustomButton = ({onPress, disabled , text, type = 'PRIMARY'}) => {
     </Pressable>
   )
 }
-
 const styles = StyleSheet.create({
   container: {
-   
     width: '100%',
     padding: 15,
     marginVertical: 5,
@@ -40,21 +44,28 @@ const styles = StyleSheet.create({
   },
   container_Secondary: {
     backgroundColor: 'white',
-    borderWidth: 1,
+    borderWidth: 2,
     borderRadius: 5,
     borderColor: '#D61355',
   },
   container_TERTIARY: {},
   text: {
-    fontSize: 20,
+    fontFamily: 'Roboto-Bold',
     fontWeight: 'bold',
-    color: 'white'
+    fontSize: 20,
+    color: 'white',
+
+
   },
   text_TERTIARY: {
-    fontSize: 20,
-    color: 'gray',
+    fontFamily:'Poppins-Medium',
+    color:'black',
+    fontSize:18,
+    textDecorationLine:'underline',
+    
   },
   text_Secondary: {
+    fontFamily: 'Roboto-Bold',
     fontSize: 20,
     color: '#D61355',
   },
